@@ -1,4 +1,10 @@
 #include "STD.h"
+
+
+
+#define MAX_SIZE 10
+#define MIN_SIZE 3 //?
+
 typedef struct SimpleDb
 {
     uint32 Student_ID;
@@ -13,4 +19,25 @@ typedef struct SimpleDb
 
 }Student;
 
-//Functions Prototypes :
+
+//Database Functions Prototypes :
+
+extern bool SDB_INIT(void);
+
+extern Bool SDB_IsFull(void);
+
+extern uint8 SDB_GetUsedSize(void);
+
+extern Bool SDB_AddEntry(void);
+
+extern void SDB_DeleteEntry(uint32);
+
+extern Bool SDB_ReadEntry(uint32);
+
+extern void SDB_GetList(uint8*, uint32);
+
+extern Bool SDB_IsIdExist(uint32);
+
+
+
+
