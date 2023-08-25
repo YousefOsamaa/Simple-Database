@@ -77,7 +77,7 @@ extern uint32 SearchList(Node_t** Head, uint32 ID)
         SearchPtr = SearchPtr->NextPtr;
     }
 
-    return 0;
+    return EMPTY;
 }
 
 
@@ -142,5 +142,17 @@ extern void DeleteFromMiddle(Node_t** Head, uint32 ID)
         TempPtr->NextPtr = DeletePtr->NextPtr;
         free(DeletePtr);
 
+    }
+}
+
+extern void DeleteList(Node_t** Head)
+{
+    Node_t* DeletePtr = *Head;
+
+    if(DeletePtr)
+    {
+        *Head =(*Head)->NextPtr;
+        free(DeletePtr);
+        DeletePtr = *Head;
     }
 }

@@ -1,5 +1,6 @@
 #include "SDB.h"
 
+#define EMPTY 0
 typedef struct 
 {
     Student Data ;
@@ -21,3 +22,5 @@ extern void DeleteFromBegin(Node_t** Head);
 extern void DeleteFromEnd(Node_t** Head);
 
 extern void DeleteFromMiddle(Node_t** Head, uint32 ID);
+
+extern void DeleteList(Node_t** Head);
