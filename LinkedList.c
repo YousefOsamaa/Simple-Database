@@ -1,0 +1,146 @@
+#include "LinkedList.h"
+
+extern void LinkedListInit(Node_t** Head)
+{
+    *Head = 0;
+    
+}
+
+extern void AddToBegin(Node_t** Head, Student Data)
+{
+    Node_t* NewNodePtr = (Node_t*)malloc(sizeof(Student));
+    NewNodePtr->Data = Data;
+
+    if(*Head = 0)
+    {
+        *Head = NewNodePtr; 
+    }
+    else
+    {
+        Node_t* TempPtr = *Head;
+        *Head = NewNodePtr;
+        (*Head)->NextPtr = TempPtr;
+    }
+   
+}
+
+extern void AddToEnd(Node_t** Head, Student Data)
+{
+     Node_t* NewNodePtr = (Node_t*)malloc(sizeof(Node_t));
+     NewNodePtr ->Data = Data;
+
+
+    if(*Head == 0)
+    {
+        *Head = NewNodePtr;
+    }
+    else
+    {
+        Node_t* SearchPtr = *Head;
+
+        while(SearchPtr ->NextPtr)
+        {
+            SearchPtr= SearchPtr->NextPtr;
+        }
+
+        SearchPtr ->NextPtr = NewNodePtr;
+        NewNodePtr ->NextPtr = 0;
+    }
+
+}
+
+extern uint32 GetListSize(Node_t* Head)
+{
+    uint32 Count = 0;
+    Node_t* CountPtr = Head; 
+    while(CountPtr)
+    {
+        Count++;
+        CountPtr = CountPtr->NextPtr;
+    }
+    return Count;
+}
+
+extern uint32 SearchList(Node_t** Head, uint32 ID)
+{
+    Node_t* SearchPtr = *Head;
+    uint32 Index = 0;
+    uint32 Size = GetListSize(*Head);
+
+    while(SearchPtr)
+    {
+        if((SearchPtr->Data).Student_ID == ID)
+        {
+            return Index;
+        }
+
+        SearchPtr = SearchPtr->NextPtr;
+    }
+
+    return 0;
+}
+
+
+extern void DeleteFromBegin(Node_t** Head)
+{
+    if(*Head)
+    {
+        Node_t** DeletePtr = *Head;
+        *Head = (*Head)->NextPtr;
+        free(DeletePtr);
+    }
+    
+}
+
+extern void DeleteFromEnd(Node_t** Head)
+{
+    if(*Head)
+    {
+        Node_t* SearchPtr =*Head;
+        Node_t* DeletePtr = 0;
+
+        while( (SearchPtr->NextPtr) ->NextPtr)
+        {
+            SearchPtr = SearchPtr -> NextPtr;
+
+        }
+
+        DeletePtr = SearchPtr->NextPtr;
+        SearchPtr->NextPtr =0;
+
+        free(DeletePtr);
+    }
+
+}
+
+extern void DeleteFromMiddle(Node_t** Head, uint32 ID)
+{
+    uint32 Index = SearchList(Head,ID);
+    uint32 Size = GetListSize(*Head);
+    
+    if(Index == 1)
+    {
+        DeleteFromBegin(Head);
+
+    }
+    else if (Index == Size)
+    {
+        DeleteFromEnd(Head);
+
+    }
+    else if(Index != 0)
+    {
+        Node_t* TempPtr = *Head;
+        Node_t* DeletePtr = 0;
+
+        for(uint32 i =0; i< Index - 2; i++)
+        {
+            TempPtr = TempPtr->NextPtr;
+        }
+
+        DeletePtr = TempPtr->NextPtr;
+        TempPtr->NextPtr = DeletePtr->NextPtr;
+        free(DeletePtr);
+
+    }
+}

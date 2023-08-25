@@ -22,7 +22,7 @@ typedef struct SimpleDb
 
 //Database Functions Prototypes :
 
-extern bool SDB_INIT(void);
+extern Bool SDB_INIT(void);
 
 extern Bool SDB_IsFull(void);
 
