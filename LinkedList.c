@@ -156,3 +156,57 @@ extern void DeleteList(Node_t** Head)
         DeletePtr = *Head;
     }
 }
+
+extern void PrintNodeData(Node_t* Head, uint32 Index)
+{
+    Node_t* PrintPtr = Head;
+    if(Index)
+    {
+        for(uint32 i = 1; i< Index; i++)
+        {
+            PrintPtr = PrintPtr->NextPtr;
+        }
+
+        PrintMessageOnScreen("Student ID: ");
+        PrintData( (PrintPtr->Data).Student_ID, 'd' );
+
+        PrintMessageOnScreen("Student Year: ");
+        PrintData( (PrintPtr->Data).Student_Year, 'd' );
+
+        PrintMessageOnScreen("Course 1 ID: ");
+        PrintData( (PrintPtr->Data).Course1_ID, 'd' );
+
+        PrintMessageOnScreen("Course 1 Grade: ");
+        PrintData( (PrintPtr->Data).Course1_Grade, 'c' );
+
+        PrintMessageOnScreen("Course 2 ID: ");
+        PrintData( (PrintPtr->Data).Course2_ID, 'd' );
+
+        PrintMessageOnScreen("Course 2 Grade: ");
+        PrintData( (PrintPtr->Data).Course2_Grade, 'c' );
+
+        PrintMessageOnScreen("Course 3 ID: ");
+        PrintData( (PrintPtr->Data).Course3_ID, 'd');
+
+        PrintMessageOnScreen("Course 3 Grade: ");
+        PrintData( (PrintPtr->Data).Course3_Grade, 'c' );
+
+}
+
+
+// extern uint32 GetStudentID (Node_t* Head, uint32 Index)
+// {
+//     Node_t* SearchPtr = *Head;
+//     uint32 Size = GetListSize(Head);
+
+//     if(Index > 0 && Index <= Size )
+//     {
+//         for(uint32 i = 1; i < Index; i++)
+//         {
+//             SearchPtr = SearchPtr->NextPtr;
+//         }        
+
+//         return ( (SearchPtr->Data).Student_ID );
+//     }
+   
+// }
