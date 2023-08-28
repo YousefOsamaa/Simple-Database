@@ -7,14 +7,14 @@
 
 #define MAX_SIZE 10
 #define MIN_SIZE 3 //?
-#define MIN_GRADE 1
-#define MAX_GRADE 12
-#define MIN_ID    1
-#define Max_ID    1000
+#define MIN_STUDENT_YEAR 1
+#define MAX_STUDENT_YEAR 12
+#define MIN_STUDENT_ID  1
+#define MAX_STUDENT_ID    1000
 #define MIN_COURSE_ID 1
 #define MAX_COURSE_ID 100
-#define MIN_COURSE_GRADE 'F'
-#define MAX_COURSE_GRADE 'A'
+#define MIN_COURSE_GRADE 0 //in terms of ascii
+#define MAX_COURSE_GRADE 100
 
 typedef struct SimpleDb
 {

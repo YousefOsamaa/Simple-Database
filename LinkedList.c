@@ -6,24 +6,6 @@ extern void LinkedListInit(Node_t** Head)
     
 }
 
-extern void AddToBegin(Node_t** Head, Student Data)
-{
-    Node_t* NewNodePtr = (Node_t*)malloc(sizeof(Student));
-    NewNodePtr->Data = Data;
-
-    if(*Head = 0)
-    {
-        *Head = NewNodePtr; 
-    }
-    else
-    {
-        Node_t* TempPtr = *Head;
-        *Head = NewNodePtr;
-        (*Head)->NextPtr = TempPtr;
-    }
-   
-}
-
 extern void AddToEnd(Node_t** Head, Student Data)
 {
      Node_t* NewNodePtr = (Node_t*)malloc(sizeof(Node_t));
@@ -61,14 +43,15 @@ extern uint32 GetListSize(Node_t* Head)
     return Count;
 }
 
-extern uint32 SearchList(Node_t** Head, uint32 ID)
+extern uint32 SearchList(Node_t* Head, uint32 ID)
 {
-    Node_t* SearchPtr = *Head;
+    Node_t* SearchPtr = Head;
     uint32 Index = 0;
-    uint32 Size = GetListSize(*Head);
+    uint32 Size = GetListSize(Head);
 
     while(SearchPtr)
     {
+        Index++;
         if((SearchPtr->Data).Student_ID == ID)
         {
             return Index;
@@ -84,7 +67,7 @@ extern void DeleteFromBegin(Node_t** Head)
 {
     if(*Head)
     {
-        Node_t** DeletePtr = *Head;
+        Node_t* DeletePtr = *Head;
         *Head = (*Head)->NextPtr;
         free(DeletePtr);
     }
@@ -114,7 +97,7 @@ extern void DeleteFromEnd(Node_t** Head)
 
 extern void DeleteFromMiddle(Node_t** Head, uint32 ID)
 {
-    uint32 Index = SearchList(Head,ID);
+    uint32 Index = SearchList(*Head,ID);
     uint32 Size = GetListSize(*Head);
     
     if(Index == 1)
@@ -166,29 +149,30 @@ extern void PrintNodeData(Node_t* Head, uint32 Index)
             PrintPtr = PrintPtr->NextPtr;
         }
 
-        PrintMessageOnScreen("Student ID: ");
+        PrintMessageOnScreen("Student ID:      ");
         PrintData( (PrintPtr->Data).Student_ID, 'd' );
 
-        PrintMessageOnScreen("Student Year: ");
+        PrintMessageOnScreen("Student Year:    ");
         PrintData( (PrintPtr->Data).Student_Year, 'd' );
 
-        PrintMessageOnScreen("Course 1 ID: ");
+        PrintMessageOnScreen("Course 1 ID:     ");
         PrintData( (PrintPtr->Data).Course1_ID, 'd' );
 
-        PrintMessageOnScreen("Course 1 Grade: ");
+        PrintMessageOnScreen("Course 1 Grade:  ");
         PrintData( (PrintPtr->Data).Course1_Grade, 'c' );
 
-        PrintMessageOnScreen("Course 2 ID: ");
+        PrintMessageOnScreen("Course 2 ID:     ");
         PrintData( (PrintPtr->Data).Course2_ID, 'd' );
 
-        PrintMessageOnScreen("Course 2 Grade: ");
+        PrintMessageOnScreen("Course 2 Grade:  ");
         PrintData( (PrintPtr->Data).Course2_Grade, 'c' );
 
-        PrintMessageOnScreen("Course 3 ID: ");
+        PrintMessageOnScreen("Course 3 ID:     ");
         PrintData( (PrintPtr->Data).Course3_ID, 'd');
 
-        PrintMessageOnScreen("Course 3 Grade: ");
+        PrintMessageOnScreen("Course 3 Grade:  ");
         PrintData( (PrintPtr->Data).Course3_Grade, 'c' );
+        NewLine();
 
     }
 }

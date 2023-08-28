@@ -3,24 +3,22 @@
 
 extern void SDB_APP(void)
 {
-    PrintMessageOnScreen("Program has started");
-    PrintMessageOnScreen("/n");
+    PrintMessageOnScreen("\n--> Program has started");
+    NewLine();
 
-    uint8 Input;
-    SDB_INIT();
-
+    uint32 Input;
     do
     {
         //Options Table printed
         PrintTable();
 
-        //UI takes input from user and places it in UserInput
-        UserInput(&Input, 'd');
+        //UI takes input from user and places it in IntegerUserInput
+        IntegerUserInput(&Input, 'd');
 
         //The appropriate action is implemented 
         SBD_Action(Input);
         
-    } while ( UserInput != EXIT);
+    } while ( Input != EXIT);
     
     
 
@@ -33,81 +31,100 @@ extern void SBD_Action(uint8 Choice)
     //typedef enum { EXIT, ADD_ENTRY, GET_USED_SIZE, READ_STUDENT_DATA , GET_STUDENTS_ID_LIST, CHECK_ID , DELETE_STUDENT_DATA , CHECK_DATABASE_FULL  } Option;
     switch(Choice)
     {
-        case ADD_ENTRY:
-        uint32 ID,Year, Course1ID, Course1Grade,Course2ID, Course2Grade, Course3ID, Course3Grade;
-        PrintMessageOnScreen("Enter Student Id");
-        UserInput(&ID, 'd');
+        case ADD_ENTRY:  
+         {
+            uint32 ID,Year, Course1ID, Course1Grade,Course2ID, Course2Grade, Course3ID, Course3Grade;
+            NewLine();
+            PrintMessageOnScreen("Enter Student Id:  ");
+            IntegerUserInput(&ID, 'd');
 
-        PrintMessageOnScreen("Enter Student Year");
-        UserInput(&Year, 'd');
-        
-        PrintMessageOnScreen("Enter Course 1 ID");
-        UserInput(&Course1ID, 'd');
+            PrintMessageOnScreen("Enter Student Year:  ");
+            IntegerUserInput(&Year, 'd');
+            
+            PrintMessageOnScreen("Enter Course 1 ID:  ");
+            IntegerUserInput(&Course1ID, 'd');
 
-        PrintMessageOnScreen("Enter Course 1 Grade");
-        UserInput(&Course1Grade, 'c');
+            PrintMessageOnScreen("Enter Course 1 Grade (%):  "); 
+            IntegerUserInput(&Course1Grade,'d');
 
-        PrintMessageOnScreen("Enter Course 2 ID");
-        UserInput(&Course2ID, 'd');
+            PrintMessageOnScreen("Enter Course 2 ID: ");
+            IntegerUserInput(&Course2ID, 'd');
+            
 
-        PrintMessageOnScreen("Enter Course 2 Grade");
-        UserInput(&Course2Grade, 'c');
+            PrintMessageOnScreen("Enter Course 2 Grade (%):  ");
+            IntegerUserInput(&Course2Grade, 'd');
 
-        PrintMessageOnScreen("Enter Course 3 ID");
-        UserInput(&Course3ID, 'd');
+            PrintMessageOnScreen("Enter Course 3 ID:  ");
+            IntegerUserInput(&Course3ID, 'd');
+            
 
-        PrintMessageOnScreen("Enter Course 3 Grade");
-        UserInput(&Course3Grade, 'c');
+            PrintMessageOnScreen("Enter Course 3 Grade (%):  ");
+            IntegerUserInput(&Course3Grade, 'd');
 
-        if(SDB_AddEntry(ID, Year, Course1ID, Course1Grade, Course2ID, Course2Grade, Course3ID, Course3Grade))
-        {
-            PrintMessageOnScreen("Entry added successfulyy.");
-        }
-        break;
+            if(SDB_AddEntry(ID, Year, Course1ID, Course1Grade, Course2ID, Course2Grade, Course3ID, Course3Grade))
+            {
+                PrintMessageOnScreen("--> Entry added successfulyy.");
+                NewLine();
+                NewLine();
+            }
+            break;
+        }    
 
 
         case GET_USED_SIZE:
-        PrintMessageOnScreen("Number of students: ");
+        NewLine();
+        PrintMessageOnScreen("--> Number of students:  ");
         PrintData(SDB_GetUsedSize(),'d');
+        NewLine();
         break;
 
 
         case READ_STUDENT_DATA:
-        uint32 ID;
-        PrintMessageOnScreen("Enter Student ID: ");
-        UserInput(&ID, 'd');
-
-        if( !(SDB_ReadEntry(ID)) )
         {
-            ErrorMessage(NOT_FOUND);
-        }
-        break;
+            uint32 ID;
+            NewLine();
+            PrintMessageOnScreen("Enter Student ID:  ");
+            IntegerUserInput(&ID, 'd');
 
+            if( !(SDB_ReadEntry(ID)) )
+            {
+                ErrorMessage(NOT_FOUND);
+            }
+            break;
+        }
 
         case GET_STUDENTS_ID_LIST:
-        uint32 Count;
-        uint32 IDArray[MAX_SIZE]={0};
-        SDB_GetList(&Count, IDArray);
-        
-        if(!Count)
         {
-         PrintArray(IDArray,Count);
+            uint8 Count;
+            uint32 IDArray [MAX_SIZE] = {0};
+            SDB_GetList(&Count, IDArray);
+            
+            if(Count)
+            {
+             PrintMessageOnScreen("--> ID List: ");
+             NewLine();
+             PrintArray(IDArray,Count);
+            }
+            else
+            {
+                ErrorMessage(EMPTY_DATABASE);
+            }                            
+            break;
+            NewLine();
+
         }
-        else
-        {
-            ErrorMessage(EMPTY_DATABASE);
-        }                            
-        break;
 
 
         case CHECK_ID:
-        PrintMessageOnScreen("Enter Student ID: ");
+        NewLine();
+        PrintMessageOnScreen("Enter Student ID:  ");
         uint32 ID;
-        UserInput(&ID,'d');
+        IntegerUserInput(&ID,'d');
 
         if(SDB_IsIdExist(ID))
         {
-            PrintMessageOnScreen("ID exists");
+            PrintMessageOnScreen("--> ID exists");
+            NewLine();
         }
         else
         {
@@ -117,19 +134,31 @@ extern void SBD_Action(uint8 Choice)
 
 
         case DELETE_STUDENT_DATA:
-        uint32 ID;
-        UserInput(&ID,'d');
+        {
+            uint32 ID;
 
-        if (SDB_IsIdExist(ID))
-        {
-            SDB_DeleteEntry(ID);
-            PrintMessageOnScreen("Student data deleted successfully.");
-        }
-        else
-        {
-            ErrorMessage(NOT_FOUND);
-        }
-        break;
+            if(SDB_GetUsedSize)
+            {
+                ErrorMessage(EMPTY_DATABASE);
+                break;
+            }
+
+            PrintMessageOnScreen("Enter Student ID:  ");
+            IntegerUserInput(&ID,'d');
+
+            if (SDB_IsIdExist(ID))
+            {
+                SDB_DeleteEntry(ID);
+                NewLine();
+                PrintMessageOnScreen("--> Student data deleted successfully.");
+                NewLine();
+                NewLine();
+            }
+            else
+            {
+                ErrorMessage(NOT_FOUND);
+            }
+        }     break;
 
 
         case CHECK_DATABASE_FULL:
@@ -139,14 +168,20 @@ extern void SBD_Action(uint8 Choice)
         }
         else
         {
-            PrintMessageOnScreen("Database is not full.");
+            NewLine();
+            PrintMessageOnScreen("--> Database is not full.");
+            NewLine();
+            NewLine();
         }
         break;
 
 
         case EXIT:
         DeleteDatabase();
-        PrintMessageOnScreen("Program has ended");
+        //printf("%d \n",SDB_GetUsedSize() );
+        NewLine();
+        PrintMessageOnScreen("--> Program has ended and database has been deleted");
+        NewLine();
         break;
 
 
