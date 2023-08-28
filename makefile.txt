@@ -1,0 +1,2 @@
+Simple_Database:
+	gcc Main.c LinkedList.c SDB.c SDBAPP.c UI.h -0 FinalOutput.exe
