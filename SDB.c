@@ -27,53 +27,56 @@ extern Bool SDB_AddEntry(uint32 User_Student_ID, uint32 User_Student_Year, uint3
     if( !(SDB_IsFull()) )
     {
     //Checks to be made
-    if( (User_Student_ID < MIN_ID) || (User_Student_ID > Max_ID) )
+    if( (User_Student_ID < MIN_ID) || (User_Student_ID > Max_ID))
     {
-
+      ErrorMessage(OUT_OF_RANGE);
       return False;
+    }
+    if(SDB_IsIdExist(User_Student_ID) )
+    {
+        ErrorMessage(REPEATED_ID);
+        return False;
     }
     NewStudent.Student_ID = User_Student_ID;
 
     if( (User_Student_Year < MIN_GRADE) || (User_Student_Year > MAX_GRADE) )
     {
-        PrintMessageOnScreen("Invalid year");
+        ErrorMessage(OUT_OF_RANGE);
         return False;
     }
     NewStudent.Student_Year = User_Student_Year;
 
     if( (User_Course1_ID < MIN_COURSE_ID) || (User_Course1_ID > MAX_COURSE_ID) )
     {
-        PrintMessageOnScreen("Invalid Course ID");
+        ErrorMessage(OUT_OF_RANGE);
         return False;
     }
     NewStudent.Course1_ID = User_Course1_ID;
 
     if( (User_Course1_Grade < MIN_COURSE_GRADE) || (User_Course1_Grade > MAX_COURSE_GRADE) )
     {
-        PrintMessageOnScreen("Invalid Course grade");
+        ErrorMessage(OUT_OF_RANGE);
         return False;
     }
     NewStudent.Course1_Grade = User_Course1_Grade;
 
     if( (User_Course2_ID < MIN_COURSE_ID) || (User_Course2_ID > MAX_COURSE_ID) )
     {
-        PrintMessageOnScreen("Invalid Course ID");
+        ErrorMessage(OUT_OF_RANGE);
         return False;
     }
-    NewStudent.Course2_ID =User_Course2_ID;
+    NewStudent.Course2_ID = User_Course2_ID;
 
-
-    
     if( (User_Course2_Grade < MIN_COURSE_GRADE) || (User_Course2_Grade > MAX_COURSE_GRADE) )
     {
-        PrintMessageOnScreen("Invalid Course grade");
+        ErrorMessage(OUT_OF_RANGE);
         return False;
     }
     NewStudent.Course2_Grade = User_Course2_Grade;
 
     if( (User_Course3_ID < MIN_COURSE_ID) || (User_Course3_ID > MAX_COURSE_ID) )
     {
-        PrintMessageOnScreen("Invalid Course ID");
+        ErrorMessage(OUT_OF_RANGE);
         return False;
     }
     NewStudent.Course3_ID = User_Course3_ID;
@@ -98,34 +101,29 @@ extern void SDB_DeleteEntry(uint32 ID)
 
 }
 
-
 extern Bool SDB_ReadEntry(uint32 ID)
 {
     uint32 Index = SearchList(&DataBaseHead, ID);
     if(Index)
     {
         PrintNodeData(DataBaseHead, Index);
+        return True;
     }
-    return Index;
+    return False;
 }
 
-// extern void SDB_GetList(uint8* Count, uint32* List)
-// {
-//     *Count = GetListSize(DataBaseHead);
-//     uint32* ArrPtr = List;
-    
-//     if(List)
-//     {
-//         for(uint32 i = 0; i < *Count; i++)
-//         {
-//             ArrPtr[i] = GetStudentID(DataBaseHead, i );
-//             ArrPtr++;
-//         }
-//     }
+extern void SDB_GetList(uint8* Count, uint32* List)
+{
+    *Count = SDB_GetUsedSize();
+    uint32* Ptr = List;
 
+    for(uint32 i = 0; i< *Count; i++)
+    {
+        Ptr[i] = GetStudentData(DataBaseHead,i);
+        Ptr++;
+    }
 
-// }
-
+}
 
 extern Bool SDB_IsIdExist(uint32 User_ID)
 {
@@ -142,3 +140,4 @@ extern void DeleteDatabase(void)
 {
     DeleteList(&DataBaseHead);
 }
+

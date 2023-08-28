@@ -30,6 +30,6 @@ extern void DeleteList(Node_t**);
 
 extern void PrintNodeData(Node_t*, uint32);
 
-//extern uint32 GetStudentID(Node_t* Head, uint32 Index);
+extern uint32 GetStudentData(Node_t*, uint32);
 
 #endif

@@ -1,10 +1,10 @@
 #include "SDBAPP.h"
 #include "UI.h"
 
-extern void SDB_APP()
+extern void SDB_APP(void)
 {
     PrintMessageOnScreen("Program has started");
-    printf(" ");
+    PrintMessageOnScreen("/n");
 
     uint8 Input;
     SDB_INIT();
@@ -12,7 +12,7 @@ extern void SDB_APP()
     do
     {
         //Options Table printed
-
+        PrintTable();
 
         //UI takes input from user and places it in UserInput
         UserInput(&Input, 'd');
@@ -59,20 +59,18 @@ extern void SBD_Action(uint8 Choice)
         PrintMessageOnScreen("Enter Course 3 Grade");
         UserInput(&Course3Grade, 'c');
 
-        if(SDB_AddEntry(ID,Year,Course1ID,Course1Grade,Course2ID,Course2Grade,Course3ID,Course3Grade))
+        if(SDB_AddEntry(ID, Year, Course1ID, Course1Grade, Course2ID, Course2Grade, Course3ID, Course3Grade))
         {
             PrintMessageOnScreen("Entry added successfulyy.");
         }
-        else
-        {
-            ErrorMessage(WRONG_INPUTDATA);
-        }
         break;
+
 
         case GET_USED_SIZE:
         PrintMessageOnScreen("Number of students: ");
         PrintData(SDB_GetUsedSize(),'d');
         break;
+
 
         case READ_STUDENT_DATA:
         uint32 ID;
@@ -85,14 +83,22 @@ extern void SBD_Action(uint8 Choice)
         }
         break;
 
+
         case GET_STUDENTS_ID_LIST:
-        uint32* ListArray[MAX_SIZE];
         uint32 Count;
-
-        SDB_GetList(&Count, ListArray);
-        PrintArray(ListArray, SDB_GetUsedSize());
-
+        uint32 IDArray[MAX_SIZE]={0};
+        SDB_GetList(&Count, IDArray);
+        
+        if(!Count)
+        {
+         PrintArray(IDArray,Count);
+        }
+        else
+        {
+            ErrorMessage(EMPTY_DATABASE);
+        }                            
         break;
+
 
         case CHECK_ID:
         PrintMessageOnScreen("Enter Student ID: ");
@@ -109,6 +115,7 @@ extern void SBD_Action(uint8 Choice)
         }
         break;
 
+
         case DELETE_STUDENT_DATA:
         uint32 ID;
         UserInput(&ID,'d');
@@ -122,14 +129,13 @@ extern void SBD_Action(uint8 Choice)
         {
             ErrorMessage(NOT_FOUND);
         }
-        
-
         break;
+
 
         case CHECK_DATABASE_FULL:
         if(SDB_IsFull())
         {
-            PrintMessageOnScreen("Database is full.");
+            ErrorMessage(FULL_DATABASE);
         }
         else
         {
@@ -137,13 +143,15 @@ extern void SBD_Action(uint8 Choice)
         }
         break;
 
+
         case EXIT:
         DeleteDatabase();
         PrintMessageOnScreen("Program has ended");
         break;
 
+
         default:
-        //UI prints that the input is incorrect
+        //UI prints that the choice is incorrect
         ErrorMessage(WRONG_CHOICE);
     }
 

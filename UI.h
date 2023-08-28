@@ -12,6 +12,7 @@ extern void PrintMessageOnScreen(int8*);
 
 extern void ErrorMessage(uint32);
 
-extern PrintArray(uint32* IntegerArray, uint32 Size);
+extern void PrintArray(uint32* IntegerArray, uint32 Size);
 
+extern PrintTable(void);
 #endif

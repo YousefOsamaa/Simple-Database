@@ -80,7 +80,6 @@ extern uint32 SearchList(Node_t** Head, uint32 ID)
     return EMPTY;
 }
 
-
 extern void DeleteFromBegin(Node_t** Head)
 {
     if(*Head)
@@ -191,22 +190,23 @@ extern void PrintNodeData(Node_t* Head, uint32 Index)
         PrintMessageOnScreen("Course 3 Grade: ");
         PrintData( (PrintPtr->Data).Course3_Grade, 'c' );
 
+    }
 }
 
+extern uint32 GetStudentData(Node_t* Head, uint32 Index)
+{
+    uint32 Size = GetListSize(Head);
+    Node_t* SearchPtr = Head;
+    if(Index > 0 && Index <= Size)
+    {
+        for(uint32 i = 1; i< Size; i++)
+        {
+            SearchPtr = SearchPtr->NextPtr;
+        }
 
-// extern uint32 GetStudentID (Node_t* Head, uint32 Index)
-// {
-//     Node_t* SearchPtr = *Head;
-//     uint32 Size = GetListSize(Head);
+        return ((SearchPtr->Data).Student_ID);
 
-//     if(Index > 0 && Index <= Size )
-//     {
-//         for(uint32 i = 1; i < Index; i++)
-//         {
-//             SearchPtr = SearchPtr->NextPtr;
-//         }        
+    }
 
-//         return ( (SearchPtr->Data).Student_ID );
-//     }
-   
-// }
+}
+
