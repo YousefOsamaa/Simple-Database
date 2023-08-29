@@ -9,6 +9,8 @@ extern void IntegerUserInput(uint32* Input)
 
 extern void PrintData(uint32 Data,int8 Type)
 {
+    //Checking if the variable is a decimal or character
+
     if(Type == 'd')
     printf("%d", Data);
 
@@ -20,9 +22,13 @@ extern void PrintData(uint32 Data,int8 Type)
 
 extern void PrintMessageOnScreen(int8* Message)
 {
+    //Checing if the pointer points to the null terminator or not
     while(*Message)
     {
+        //Printing the element pointed to by the pointer
         printf("%c", *Message);
+
+        //Incrementing the ponter
         Message++;
     }
 
@@ -35,6 +41,8 @@ extern void NewLine(void)
 
 extern void ErrorMessage(uint32 ErrorType)
 {
+    //Checing what type of error does the variable hold 
+    //All the error types are described in the STD.h file
     switch(ErrorType)
     {
         case WRONG_CHOICE:
@@ -107,14 +115,14 @@ extern void PrintTable(void)
     printf("%s \n","******************************************");
     printf("                Options Table \n");
     printf("%s \n","******************************************");
-    printf("#To add an entry                            1\n");
-    printf("#To get the used Size in database           2\n");
-    printf("#To read a student data,                    3\n");
-    printf("#To get the list of all students IDs        4\n");
-    printf("#To check if an ID exists                   5\n");
-    printf("#To delete a student data                   6\n");
-    printf("#To check if the database is full           7\n");
-    printf("#To exit and delete the database            0\n");
+    printf("#To add an entry                            %d\n",ADD_ENTRY);
+    printf("#To get the used Size in database           %d\n",GET_USED_SIZE);
+    printf("#To read a student data,                    %d\n",READ_STUDENT_DATA);
+    printf("#To get the list of all students IDs        %d\n",GET_STUDENTS_ID_LIST);
+    printf("#To check if an ID exists                   %d\n",CHECK_ID);
+    printf("#To delete a student data                   %d\n",DELETE_STUDENT_DATA);
+    printf("#To check if the database is full           %d\n",CHECK_DATABASE_FULL);
+    printf("#To exit and delete the database            %d\n",EXIT);
     printf("%s \n","******************************************\n");
     printf("%s \n","******************************************");
     printf("Your Input: ");
