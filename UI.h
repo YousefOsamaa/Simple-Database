@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "SDB.h"
 
-extern void IntegerUserInput(uint32*, int8);
+extern void IntegerUserInput(uint32*);
 
 extern void PrintData(uint32, int8);
 

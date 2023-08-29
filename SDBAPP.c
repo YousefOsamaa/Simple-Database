@@ -6,6 +6,8 @@ extern void SDB_APP(void)
     PrintMessageOnScreen("\n--> Program has started");
     NewLine();
 
+    SDB_INIT();
+
     uint32 Input;
     do
     {
@@ -13,7 +15,7 @@ extern void SDB_APP(void)
         PrintTable();
 
         //UI takes input from user and places it in IntegerUserInput
-        IntegerUserInput(&Input, 'd');
+        IntegerUserInput(&Input);
 
         //The appropriate action is implemented 
         SBD_Action(Input);
@@ -36,30 +38,30 @@ extern void SBD_Action(uint8 Choice)
             uint32 ID,Year, Course1ID, Course1Grade,Course2ID, Course2Grade, Course3ID, Course3Grade;
             NewLine();
             PrintMessageOnScreen("Enter Student Id:  ");
-            IntegerUserInput(&ID, 'd');
+            IntegerUserInput(&ID);
 
             PrintMessageOnScreen("Enter Student Year:  ");
-            IntegerUserInput(&Year, 'd');
+            IntegerUserInput(&Year);
             
             PrintMessageOnScreen("Enter Course 1 ID:  ");
-            IntegerUserInput(&Course1ID, 'd');
+            IntegerUserInput(&Course1ID);
 
             PrintMessageOnScreen("Enter Course 1 Grade (%):  "); 
-            IntegerUserInput(&Course1Grade,'d');
+            IntegerUserInput(&Course1Grade);
 
             PrintMessageOnScreen("Enter Course 2 ID: ");
-            IntegerUserInput(&Course2ID, 'd');
+            IntegerUserInput(&Course2ID);
             
-
             PrintMessageOnScreen("Enter Course 2 Grade (%):  ");
-            IntegerUserInput(&Course2Grade, 'd');
+            IntegerUserInput(&Course2Grade);
 
             PrintMessageOnScreen("Enter Course 3 ID:  ");
-            IntegerUserInput(&Course3ID, 'd');
+            IntegerUserInput(&Course3ID);
             
-
             PrintMessageOnScreen("Enter Course 3 Grade (%):  ");
-            IntegerUserInput(&Course3Grade, 'd');
+            IntegerUserInput(&Course3Grade);
+            
+            NewLine();
 
             if(SDB_AddEntry(ID, Year, Course1ID, Course1Grade, Course2ID, Course2Grade, Course3ID, Course3Grade))
             {
@@ -76,6 +78,7 @@ extern void SBD_Action(uint8 Choice)
         PrintMessageOnScreen("--> Number of students:  ");
         PrintData(SDB_GetUsedSize(),'d');
         NewLine();
+        NewLine();
         break;
 
 
@@ -84,7 +87,8 @@ extern void SBD_Action(uint8 Choice)
             uint32 ID;
             NewLine();
             PrintMessageOnScreen("Enter Student ID:  ");
-            IntegerUserInput(&ID, 'd');
+            IntegerUserInput(&ID);
+            NewLine();
 
             if( !(SDB_ReadEntry(ID)) )
             {
@@ -101,9 +105,16 @@ extern void SBD_Action(uint8 Choice)
             
             if(Count)
             {
-             PrintMessageOnScreen("--> ID List: ");
              NewLine();
+             PrintMessageOnScreen("--> Count =  ");
+             PrintData(Count,'d');
+             NewLine();
+
+             PrintMessageOnScreen("--> ID List: ");
              PrintArray(IDArray,Count);
+             
+             NewLine();
+             NewLine();
             }
             else
             {
@@ -119,11 +130,12 @@ extern void SBD_Action(uint8 Choice)
         NewLine();
         PrintMessageOnScreen("Enter Student ID:  ");
         uint32 ID;
-        IntegerUserInput(&ID,'d');
+        IntegerUserInput(&ID);
 
         if(SDB_IsIdExist(ID))
         {
             PrintMessageOnScreen("--> ID exists");
+            NewLine();
             NewLine();
         }
         else
@@ -137,14 +149,14 @@ extern void SBD_Action(uint8 Choice)
         {
             uint32 ID;
 
-            if(SDB_GetUsedSize)
+            if(!SDB_GetUsedSize())
             {
                 ErrorMessage(EMPTY_DATABASE);
                 break;
             }
 
             PrintMessageOnScreen("Enter Student ID:  ");
-            IntegerUserInput(&ID,'d');
+            IntegerUserInput(&ID);
 
             if (SDB_IsIdExist(ID))
             {

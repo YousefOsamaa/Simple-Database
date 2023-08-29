@@ -34,6 +34,8 @@ typedef struct SimpleDb
 //Database Functions Prototypes :
 
 
+extern void SDB_INIT(void);
+
 extern Bool SDB_IsFull(void);
 
 extern uint8 SDB_GetUsedSize(void);

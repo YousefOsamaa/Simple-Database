@@ -1,6 +1,6 @@
 #include "UI.h"
 
-extern void IntegerUserInput(uint32* Input, int8 Type)
+extern void IntegerUserInput(uint32* Input)
 {
 
     scanf(" %d", Input);
@@ -15,7 +15,6 @@ extern void PrintData(uint32 Data,int8 Type)
     if(Type == 'c')
     printf("%c", Data);
 
-    printf("\n");
 
 }
 
@@ -76,6 +75,14 @@ extern void ErrorMessage(uint32 ErrorType)
 
         case COURSE_GRADE_OUT_OF_RANGE:
         printf("--> Error type: Course grade is out of range (%d - %d). \n\n",MIN_COURSE_GRADE,MAX_COURSE_GRADE);
+        break;
+
+        case REPEATED_COURSE_ID:
+        printf("--> Error type: Course ID aleady exists, Please try again. \n\n");
+        break;
+
+        default:
+        printf("--> Error type: no such error type exists, revise the error passed and try agin. \n\n");
         break;
        
     }

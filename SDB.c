@@ -4,6 +4,54 @@
 //It is a static variable that can be only accessed inside the SDB module
 static Node_t* DataBaseHead = 0;
 
+extern void SDB_INIT(void)
+{
+    PrintMessageOnScreen("--> Database is initialized with a current size of: ");
+    PrintData(SDB_GetUsedSize(), 'd');
+    PrintMessageOnScreen(" and a Mamimum Size of: ");
+    PrintData(MAX_SIZE,'d');
+    NewLine();
+    NewLine();
+    
+    PrintMessageOnScreen("--> Constraints: ");
+    NewLine();
+
+    PrintMessageOnScreen("--> Students ID has a range of: ");
+    PrintData(MIN_STUDENT_ID, 'd');
+    PrintMessageOnScreen(" - ");
+    PrintData(MAX_STUDENT_ID,'d');
+    NewLine();
+    
+    PrintMessageOnScreen("--> Students year has a range of: ");
+    PrintData(MIN_STUDENT_YEAR, 'd');
+    PrintMessageOnScreen(" - ");
+    PrintData(MAX_STUDENT_YEAR,'d');
+    NewLine();
+    
+    PrintMessageOnScreen("--> Courses ID has a range of: ");
+    PrintData(MIN_COURSE_ID, 'd');
+    PrintMessageOnScreen(" - ");
+    PrintData(MAX_COURSE_ID,'d');
+    NewLine();
+    
+    PrintMessageOnScreen("--> Courses grade has a range of: ");
+    PrintData(MIN_COURSE_GRADE, 'd');
+    PrintMessageOnScreen(" - ");
+    PrintData(MAX_COURSE_GRADE,'d');
+    NewLine();
+
+    PrintMessageOnScreen("--> For the same student, No 2 courses can have the same ID.");
+    NewLine();
+
+    PrintMessageOnScreen("--> No 2 students can have the same ID.");
+    NewLine();
+
+    PrintMessageOnScreen("--> Constraints' ranges  can be changed from the SDB file. ");
+    NewLine();
+    NewLine();
+    
+}
+
 extern Bool SDB_IsFull(void)
 {
     uint32 Size = GetListSize(DataBaseHead);
@@ -70,6 +118,13 @@ extern Bool SDB_AddEntry(uint32 User_Student_ID, uint32 User_Student_Year, uint3
     }
     NewStudent.Course1_Grade = User_Course1_Grade;
 
+    if ( ( User_Course1_ID == User_Course2_ID))
+    {
+        PrintMessageOnScreen("--> Error in Course 2");
+        NewLine();
+        ErrorMessage(REPEATED_COURSE_ID);
+        return False;
+    }
     if( (User_Course2_ID < MIN_COURSE_ID) || (User_Course2_ID > MAX_COURSE_ID) )
     {
         PrintMessageOnScreen("--> Error in Course 2");
@@ -88,6 +143,20 @@ extern Bool SDB_AddEntry(uint32 User_Student_ID, uint32 User_Student_Year, uint3
     }
     NewStudent.Course2_Grade = User_Course2_Grade;
 
+    if ( ( User_Course3_ID == User_Course2_ID))
+    {
+        PrintMessageOnScreen("--> Error in Course 3");
+        NewLine();
+        ErrorMessage(REPEATED_COURSE_ID);
+        return False;
+    }
+    if ( ( User_Course3_ID == User_Course1_ID))
+    {
+        PrintMessageOnScreen("--> Error in Course 3");
+        NewLine();
+        ErrorMessage(REPEATED_COURSE_ID);
+        return False;
+    }
     if( (User_Course3_ID < MIN_COURSE_ID) || (User_Course3_ID > MAX_COURSE_ID) )
     {
         PrintMessageOnScreen("--> Error in Course 3");
@@ -145,10 +214,9 @@ extern void SDB_GetList(uint8* Count, uint32* List)
     *Count = SDB_GetUsedSize();
     uint32* Ptr = List;
 
-    for(uint32 i = 0; i< *Count; i++)
+    for(uint32 i = 1; i<= *Count; i++)
     {
-        Ptr[i] = GetStudentData(DataBaseHead,i);
-        Ptr++;
+        Ptr[i-1] = GetStudentData(DataBaseHead,i);
     }
 
 }

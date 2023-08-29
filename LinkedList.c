@@ -151,27 +151,34 @@ extern void PrintNodeData(Node_t* Head, uint32 Index)
 
         PrintMessageOnScreen("Student ID:      ");
         PrintData( (PrintPtr->Data).Student_ID, 'd' );
+        NewLine();
 
         PrintMessageOnScreen("Student Year:    ");
         PrintData( (PrintPtr->Data).Student_Year, 'd' );
+        NewLine();
 
         PrintMessageOnScreen("Course 1 ID:     ");
         PrintData( (PrintPtr->Data).Course1_ID, 'd' );
+        NewLine();
 
         PrintMessageOnScreen("Course 1 Grade:  ");
-        PrintData( (PrintPtr->Data).Course1_Grade, 'c' );
+        PrintData( (PrintPtr->Data).Course1_Grade, 'd' );
+        NewLine();
 
         PrintMessageOnScreen("Course 2 ID:     ");
         PrintData( (PrintPtr->Data).Course2_ID, 'd' );
+        NewLine();
 
         PrintMessageOnScreen("Course 2 Grade:  ");
-        PrintData( (PrintPtr->Data).Course2_Grade, 'c' );
+        PrintData( (PrintPtr->Data).Course2_Grade, 'd' );
+        NewLine();
 
         PrintMessageOnScreen("Course 3 ID:     ");
         PrintData( (PrintPtr->Data).Course3_ID, 'd');
+        NewLine();
 
         PrintMessageOnScreen("Course 3 Grade:  ");
-        PrintData( (PrintPtr->Data).Course3_Grade, 'c' );
+        PrintData( (PrintPtr->Data).Course3_Grade, 'd' );
         NewLine();
 
     }
@@ -181,13 +188,14 @@ extern uint32 GetStudentData(Node_t* Head, uint32 Index)
 {
     uint32 Size = GetListSize(Head);
     Node_t* SearchPtr = Head;
+
     if(Index > 0 && Index <= Size)
     {
-        for(uint32 i = 1; i< Size; i++)
+        for(uint32 i = 1; i< Index; i++)
         {
             SearchPtr = SearchPtr->NextPtr;
         }
-
+        
         return ((SearchPtr->Data).Student_ID);
 
     }
